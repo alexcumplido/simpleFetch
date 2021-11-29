@@ -8,7 +8,19 @@ let templateJoke = document.querySelector('p');
 let templateWeather = document.querySelector('span')
 let iconWeather = document.querySelector('img');
 
+
 btnJokes.addEventListener ('click', () => {
+    let randomJoke = Math.floor(Math.random()*2+1);
+
+    if (randomJoke > 1) {
+        fetchDadJoke();
+    } else {
+        fetchNorrisJoke();
+    }
+   
+})
+
+function fetchDadJoke() {
     fetch('https://icanhazdadjoke.com/', header)
         .then(response => response.json())
         .then(response => {
@@ -16,7 +28,17 @@ btnJokes.addEventListener ('click', () => {
             templateJoke.textContent = `${joke}`;
         })
         .catch(error => templateJoke.textContent = error);
-})
+}
+
+function fetchNorrisJoke() {
+    fetch('https://api.chucknorris.io/jokes/random')    
+        .then(response => response.json())
+        .then(response => {
+            joke = response.value;
+            templateJoke.textContent = `${joke}`;
+        })
+        .catch(error => templateJoke.textContent = error);
+}
 
 // Prevent double score for same joke
 btnScore.forEach( button => {
@@ -41,3 +63,5 @@ fetch(`http://api.openweathermap.org/data/2.5/weather?q=Barcelona&units=metric&A
         iconWeather.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
         templateWeather.textContent = ` ${response.name} ${response.main.temp} celsius`;
     });
+
+    
