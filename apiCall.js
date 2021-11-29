@@ -1,30 +1,31 @@
 
-// Read api documentation
-// Test api in Postman
-// Create title and button as tamplate
-// Fetch API Joke 
-// Display API response in console
-// Attach event to button so onclick fetch api again
 
-// 
-
-const btn = document.querySelector('button');
-let jokeTemplate = document.querySelector('p');
+let header = { headers: { Accept: 'application/json' }};
 let joke;
+let reportJokes =[];
 
-btn.addEventListener ('click', () => {
-    fetch('https://icanhazdadjoke.com/', {
-        headers: {
-            Accept: 'application/json',
-        }
-    })
+let btnJokes = document.querySelector('#jokes');
+let btnScore = document.querySelectorAll('#score button')
+let jokeTemplate = document.querySelector('p');
+
+
+btnJokes.addEventListener ('click', () => {
+    fetch('https://icanhazdadjoke.com/', header)
         .then(response => response.json())
-        .then(response => joke = response.joke)
+        .then(response => {
+            console.log(response);
+            joke = response.joke;
+            jokeTemplate.textContent = `${joke}`;
+        })
         .catch(error => console.log(error));
-
-        jokeTemplate.textContent = `${joke}`;
 })
 
-
-
-
+btnScore.forEach( (button) => {
+    button.addEventListener ('click', (event) => {
+        reportJokes.push({
+            jokeText: joke,
+            score: Number(event.target.id),
+            date: new Date().toISOString(),
+        });
+    })
+})
