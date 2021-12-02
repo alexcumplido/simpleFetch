@@ -1,0 +1,28 @@
+$font-family-base: 'Rubik';
+
+@mixin getShape ($urlShape) {
+    background: url($urlShape);
+    background-size: 100% 100%;
+}
+
+section#joke > div{
+    height: 60vh;
+    p {
+        font-weight: 600;
+    }
+}
+
+.shape1 {
+    @include getShape('../img/blob1.svg');
+}
+
+.shape2 {
+    @include getShape('../img/blob2.svg');
+}
+
+.shape3 {
+    @include getShape('../img/blob3.svg');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
