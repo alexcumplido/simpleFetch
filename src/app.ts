@@ -6,7 +6,6 @@ const API_CHUCK: String = 'https://api.chucknorris.io/jokes/random';
 let jokeFetched: any;
 let reportJokes = [];
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
-let btnJokes: HTMLElement | any = document.querySelector('#jokes');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button')
 let templateJoke: HTMLElement | any = document.querySelector('p');
 let weatherHtml: HTMLElement | any = document.querySelector('span')
@@ -27,7 +26,7 @@ async function fetchWeather (lat: Number, long: Number) {
 
 function displayWeather (response: any) {
     weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
-        weatherHtml.textContent = `${response.main.temp} °C`;
+    weatherHtml.textContent = `${response.main.temp} °C`;
 }
 
 async function fetchIcanhaz() {
@@ -79,11 +78,11 @@ buttons.forEach((button) => {
 });
 
 btnScore.forEach( button => {
-    button.addEventListener ('click', (btn:any) => {
+    button.addEventListener ('click', () => {
         reportJokes.push({
             jokeText: jokeFetched.joke || jokeFetched.value,
             id: jokeFetched.id,
-            score: Number(btn.target.id), 
+            score: parseInt(button.id), 
             date: new Date().toISOString(),
         });
     })

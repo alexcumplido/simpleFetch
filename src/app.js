@@ -14,7 +14,6 @@ const API_CHUCK = 'https://api.chucknorris.io/jokes/random';
 let jokeFetched;
 let reportJokes = [];
 let buttons = document.querySelectorAll('button');
-let btnJokes = document.querySelector('#jokes');
 let btnScore = document.querySelectorAll('#score button');
 let templateJoke = document.querySelector('p');
 let weatherHtml = document.querySelector('span');
@@ -84,11 +83,11 @@ buttons.forEach((button) => {
     });
 });
 btnScore.forEach(button => {
-    button.addEventListener('click', (btn) => {
+    button.addEventListener('click', () => {
         reportJokes.push({
             jokeText: jokeFetched.joke || jokeFetched.value,
             id: jokeFetched.id,
-            score: Number(btn.target.id),
+            score: parseInt(button.id),
             date: new Date().toISOString(),
         });
     });
