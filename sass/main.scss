@@ -2,7 +2,9 @@ $font-family-base: 'Rubik';
 
 @mixin getShape ($urlShape) {
     background: url($urlShape);
-    background-size: 100% 100%;
+    background-size: 105% 105%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #joke > div{

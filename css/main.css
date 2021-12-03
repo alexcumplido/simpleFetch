@@ -14,17 +14,23 @@
 
 .shape1 {
   background: url("../img/blob1.svg");
-  background-size: 100% 100%;
+  background-size: 105% 105%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .shape2 {
   background: url("../img/blob2.svg");
-  background-size: 100% 100%;
+  background-size: 105% 105%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .shape3 {
   background: url("../img/blob3.svg");
-  background-size: 100% 100%;
+  background-size: 105% 105%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /*!

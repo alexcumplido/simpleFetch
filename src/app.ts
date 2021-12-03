@@ -1,11 +1,11 @@
 
-const API_WEATHER: String = 'http://api.openweathermap.org/data/2.5/weather?q=Barcelona&units=metric&APPID=';
 const API_WEATHER_KEY: String = '3a6de1bfb15f6d47dc749e2fc2555d25';
 const API_DAD: String = 'https://icanhazdadjoke.com/';
 const API_CHUCK: String = 'https://api.chucknorris.io/jokes/random';
 
 let jokeFetched: any;
 let reportJokes = [];
+let buttons: NodeListOf<Element> = document.querySelectorAll('button');
 let btnJokes: HTMLElement | any = document.querySelector('#jokes');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button')
 let templateJoke: HTMLElement | any = document.querySelector('p');
@@ -13,17 +13,22 @@ let weatherHtml: HTMLElement | any = document.querySelector('span')
 let weatherIcon: HTMLElement | any = document.querySelector('img');
 let shapeBackground :  HTMLElement | any = document.querySelector('section#joke > div');
 
+navigator.geolocation.getCurrentPosition((position)=> {
+    let lat: Number = position.coords.latitude;
+    let long: Number = position.coords.longitude;
+    fetchWeather(lat, long)
+        .then(response => displayWeather (response));
+});
 
-async function fetchWeather () {
-    let res = await fetch(`${API_WEATHER}${API_WEATHER_KEY}`);
+async function fetchWeather (lat: Number, long: Number) {
+    const res = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_KEY}`);
     return await res.json();
 }
 
-fetchWeather().    
-    then(res => {
-        weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
-        weatherHtml.textContent = `${res.name}, ${res.main.temp} °C`;
-});
+function displayWeather (response: any) {
+    weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
+        weatherHtml.textContent = `${response.main.temp} °C`;
+}
 
 async function fetchIcanhaz() {
     const res = await fetch(`${API_DAD}`, {headers:{Accept:'application/json'}});
@@ -36,7 +41,7 @@ async function fetchCuck() {
 }
 
 function insertHTML (content: any) {
-    templateJoke.textContent =  content;
+    templateJoke.textContent = content;
 }
 
 function replaceShape(){
@@ -55,34 +60,31 @@ function replaceShape(){
             break;
     }
 }
-    
-btnJokes.addEventListener ('click', () => {
-    if ((Math.floor(Math.random()*2+1)>1)){
-        fetchIcanhaz()
-            .then(res => insertHTML(res.joke))
-            .catch(error => insertHTML(error));
-            replaceShape();
-    }else {
-        fetchCuck()
-            .then(res => insertHTML(res.value))
-            .catch(error => insertHTML(error));
-            replaceShape();
-    }
-})
 
-function registerJoke (jokeFetched: any, event: any) {
-    reportJokes.push({
-        jokeText: jokeFetched.joke || jokeFetched.value,
-        id: jokeFetched.id,
-        score: Number(event.target.id), 
-        date: new Date().toISOString(),
+buttons.forEach((button) => {
+    button.addEventListener ('click', () => {
+        if ((Math.floor(Math.random()*2+1)>1)){
+            fetchIcanhaz()
+                .then(res => insertHTML(res.joke))
+                .catch(error => insertHTML(error));
+            replaceShape();
+                
+        }else{
+            fetchCuck()
+                .then(res => insertHTML(res.value))
+                .catch(error => insertHTML(error));
+            replaceShape();
+        }
     });
-}
+});
 
-// Prevent double score for same joke
 btnScore.forEach( button => {
-    button.addEventListener ('click', event => {
-        registerJoke(jokeFetched, event);
+    button.addEventListener ('click', (btn:any) => {
+        reportJokes.push({
+            jokeText: jokeFetched.joke || jokeFetched.value,
+            id: jokeFetched.id,
+            score: Number(btn.target.id), 
+            date: new Date().toISOString(),
+        });
     })
-})
-
+});

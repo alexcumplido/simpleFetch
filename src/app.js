@@ -8,29 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const API_WEATHER = 'http://api.openweathermap.org/data/2.5/weather?q=Barcelona&units=metric&APPID=';
 const API_WEATHER_KEY = '3a6de1bfb15f6d47dc749e2fc2555d25';
 const API_DAD = 'https://icanhazdadjoke.com/';
 const API_CHUCK = 'https://api.chucknorris.io/jokes/random';
 let jokeFetched;
 let reportJokes = [];
+let buttons = document.querySelectorAll('button');
 let btnJokes = document.querySelector('#jokes');
 let btnScore = document.querySelectorAll('#score button');
 let templateJoke = document.querySelector('p');
 let weatherHtml = document.querySelector('span');
 let weatherIcon = document.querySelector('img');
 let shapeBackground = document.querySelector('section#joke > div');
-function fetchWeather() {
+navigator.geolocation.getCurrentPosition((position) => {
+    let lat = position.coords.latitude;
+    let long = position.coords.longitude;
+    fetchWeather(lat, long)
+        .then(response => displayWeather(response));
+});
+function fetchWeather(lat, long) {
     return __awaiter(this, void 0, void 0, function* () {
-        let res = yield fetch(`${API_WEATHER}${API_WEATHER_KEY}`);
+        const res = yield fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_KEY}`);
         return yield res.json();
     });
 }
-fetchWeather().
-    then(res => {
-    weatherIcon.setAttribute('src', `http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
-    weatherHtml.textContent = `${res.name}, ${res.main.temp} °C`;
-});
+function displayWeather(response) {
+    weatherIcon.setAttribute('src', `http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
+    weatherHtml.textContent = `${response.main.temp} °C`;
+}
 function fetchIcanhaz() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch(`${API_DAD}`, { headers: { Accept: 'application/json' } });
@@ -62,31 +67,29 @@ function replaceShape() {
             break;
     }
 }
-btnJokes.addEventListener('click', () => {
-    if ((Math.floor(Math.random() * 2 + 1) > 1)) {
-        fetchIcanhaz()
-            .then(res => insertHTML(res.joke))
-            .catch(error => insertHTML(error));
-        replaceShape();
-    }
-    else {
-        fetchCuck()
-            .then(res => insertHTML(res.value))
-            .catch(error => insertHTML(error));
-        replaceShape();
-    }
-});
-function registerJoke(jokeFetched, event) {
-    reportJokes.push({
-        jokeText: jokeFetched.joke || jokeFetched.value,
-        id: jokeFetched.id,
-        score: Number(event.target.id),
-        date: new Date().toISOString(),
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if ((Math.floor(Math.random() * 2 + 1) > 1)) {
+            fetchIcanhaz()
+                .then(res => insertHTML(res.joke))
+                .catch(error => insertHTML(error));
+            replaceShape();
+        }
+        else {
+            fetchCuck()
+                .then(res => insertHTML(res.value))
+                .catch(error => insertHTML(error));
+            replaceShape();
+        }
     });
-}
-// Prevent double score for same joke
+});
 btnScore.forEach(button => {
-    button.addEventListener('click', event => {
-        registerJoke(jokeFetched, event);
+    button.addEventListener('click', (btn) => {
+        reportJokes.push({
+            jokeText: jokeFetched.joke || jokeFetched.value,
+            id: jokeFetched.id,
+            score: Number(btn.target.id),
+            date: new Date().toISOString(),
+        });
     });
 });
