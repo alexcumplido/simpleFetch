@@ -49,18 +49,15 @@ function insertHTML(content) {
 function replaceShape() {
     switch (Math.floor(Math.random() * 3 + 1)) {
         case 1:
-            shapeBackground.classList.remove("shape3");
-            shapeBackground.classList.remove("shape2");
+            shapeBackground.classList.remove("shape2", "shape3");
             shapeBackground.classList.add('shape1');
             break;
         case 2:
-            shapeBackground.classList.remove("shape1");
-            shapeBackground.classList.remove("shape3");
+            shapeBackground.classList.remove("shape1", "shape3");
             shapeBackground.classList.add('shape2');
             break;
         case 3:
-            shapeBackground.classList.remove("shape1");
-            shapeBackground.classList.remove("shape2");
+            shapeBackground.classList.remove("shape1", "shape2");
             shapeBackground.classList.add('shape3');
             break;
     }

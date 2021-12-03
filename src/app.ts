@@ -1,3 +1,4 @@
+
 const API_WEATHER: String = 'http://api.openweathermap.org/data/2.5/weather?q=Barcelona&units=metric&APPID=';
 const API_WEATHER_KEY: String = '3a6de1bfb15f6d47dc749e2fc2555d25';
 const API_DAD: String = 'https://icanhazdadjoke.com/';
@@ -20,8 +21,8 @@ async function fetchWeather () {
 
 fetchWeather().    
     then(res => {
-    weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
-    weatherHtml.textContent = `${res.name}, ${res.main.temp} °C`;
+        weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
+        weatherHtml.textContent = `${res.name}, ${res.main.temp} °C`;
 });
 
 async function fetchIcanhaz() {
@@ -41,18 +42,15 @@ function insertHTML (content: any) {
 function replaceShape(){
     switch (Math.floor(Math.random()*3+1)){
         case 1:
-            shapeBackground.classList.remove("shape3");
-            shapeBackground.classList.remove("shape2");
+            shapeBackground.classList.remove("shape2","shape3");
             shapeBackground.classList.add('shape1');
             break;
         case 2:
-            shapeBackground.classList.remove("shape1");
-            shapeBackground.classList.remove("shape3");
+            shapeBackground.classList.remove("shape1","shape3");
             shapeBackground.classList.add('shape2');
             break;
         case 3: 
-            shapeBackground.classList.remove("shape1");
-            shapeBackground.classList.remove("shape2");
+            shapeBackground.classList.remove("shape1","shape2");
             shapeBackground.classList.add('shape3');
             break;
     }
