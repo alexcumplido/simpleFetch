@@ -7,8 +7,16 @@ span::after {
   height: 90vh;
 }
 
+#joke > div p {
+  color: white;
+}
+
 #joke {
   position: relative;
+}
+
+#score {
+  display: none;
 }
 
 #score i {

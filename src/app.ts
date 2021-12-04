@@ -1,18 +1,18 @@
-
 const API_WEATHER_K: string = '3a6de1bfb15f6d47dc749e2fc2555d25';
 const API_DAD: string = 'https://icanhazdadjoke.com/';
 const API_CHUCK: string = 'https://api.chucknorris.io/jokes/random';
 
-let jokeFetched: object | any;
+let jokeFetched: Promise<Object> | any;
 let reportJokes: any[] = [];
 let lat: number;
 let long: number;
 let weatherHtml: HTMLElement | any = document.querySelector('span')
 let weatherIcon: HTMLElement | any = document.querySelector('img');
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
+let scorePanel : HTMLElement | any = document.querySelector('#score');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button')
 let templateJoke: HTMLElement | any = document.querySelector('p');
-let shapeBackground : HTMLElement | any = document.querySelector('section#joke > div');
+let shapeBackground : HTMLElement | any = document.querySelector('#joke > div');
 
 navigator.geolocation.getCurrentPosition((position)=> {
     lat = position.coords.latitude;
@@ -22,11 +22,12 @@ navigator.geolocation.getCurrentPosition((position)=> {
 });
 
 async function fetchWeather (lat: number, long: number) {
-    const res = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_K}`);
+    const res = await fetch
+    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_K}`);
     return await res.json();
 }
 
-function displayWeather (response: any) {
+function displayWeather (response: any): void {
     weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
     weatherHtml.textContent = `${response.main.temp} °C`;
 }
@@ -41,11 +42,15 @@ async function fetchCuck() {
     return jokeFetched = await res.json();
 }
 
-function insertHTML (content: any) {
+function insertHTML (content: string): void {
     templateJoke.textContent = content;
 }
 
-function replaceShape(){
+function showScoreButtons(): void {
+    scorePanel.style.display = 'block';
+}
+
+function replaceShape(): void {
     switch (Math.floor(Math.random()*3+1)){
         case 1:
             shapeBackground.classList.remove("shape2","shape3");
@@ -69,12 +74,14 @@ buttons.forEach((button) => {
                 .then(res => insertHTML(res.joke))
                 .catch(error => insertHTML(error));
             replaceShape();
+            showScoreButtons()
                 
         }else{
             fetchCuck()
                 .then(res => insertHTML(res.value))
                 .catch(error => insertHTML(error));
             replaceShape();
+            showScoreButtons();
         }
     });
 });

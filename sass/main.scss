@@ -21,10 +21,17 @@ span::after {
 
 #joke > div{
     height: 90vh;
+    p {
+        color: hsl(0, 0%, 100%);
+    }
 }
 
 #joke {
     position: relative;
+}
+
+#score {
+    display:none;
 }
 
 #score i{
