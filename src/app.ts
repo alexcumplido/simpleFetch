@@ -1,26 +1,28 @@
 
-const API_WEATHER_KEY: String = '3a6de1bfb15f6d47dc749e2fc2555d25';
+const API_WEATHER_K: String = '3a6de1bfb15f6d47dc749e2fc2555d25';
 const API_DAD: String = 'https://icanhazdadjoke.com/';
 const API_CHUCK: String = 'https://api.chucknorris.io/jokes/random';
 
 let jokeFetched: any;
 let reportJokes = [];
+let lat: Number;
+let long: Number;
+let weatherHtml: HTMLElement | any = document.querySelector('span')
+let weatherIcon: HTMLElement | any = document.querySelector('img');
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button')
 let templateJoke: HTMLElement | any = document.querySelector('p');
-let weatherHtml: HTMLElement | any = document.querySelector('span')
-let weatherIcon: HTMLElement | any = document.querySelector('img');
-let shapeBackground :  HTMLElement | any = document.querySelector('section#joke > div');
+let shapeBackground : HTMLElement | any = document.querySelector('section#joke > div');
 
 navigator.geolocation.getCurrentPosition((position)=> {
-    let lat: Number = position.coords.latitude;
-    let long: Number = position.coords.longitude;
+    lat = position.coords.latitude;
+    long = position.coords.longitude;
     fetchWeather(lat, long)
-        .then(response => displayWeather (response));
+        .then(response => displayWeather(response))
 });
 
 async function fetchWeather (lat: Number, long: Number) {
-    const res = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_KEY}`);
+    const res = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_K}`);
     return await res.json();
 }
 

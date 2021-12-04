@@ -3,13 +3,31 @@
   height: 90vh;
 }
 
-#score i {
-  color: #ffc105;
-  font-size: 2.5rem;
+#joke {
+  position: relative;
 }
 
-#score i:hover {
-  color: black;
+span::after {
+  content: ' | ';
+}
+
+#joke::before {
+  content: '';
+  position: absolute;
+  height: 15rem;
+  width: 15rem;
+  background: url("../img/miniBlob1.svg");
+  left: 70%;
+}
+
+#joke::after {
+  content: '';
+  position: absolute;
+  height: 15rem;
+  width: 15rem;
+  background: url("../img/miniBlob1.svg");
+  left: 10%;
+  bottom: 10%;
 }
 
 .shape1 {
@@ -31,6 +49,15 @@
   background-size: 105% 105%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+#score i {
+  color: #ffc105;
+  font-size: 2.5rem;
+}
+
+#score i:hover {
+  color: black;
 }
 
 /*!

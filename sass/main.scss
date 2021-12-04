@@ -1,14 +1,53 @@
 $font-family-base: 'Rubik';
 
-@mixin getShape ($urlShape) {
+@mixin setShape ($urlShape) {
     background: url($urlShape);
     background-size: 105% 105%;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+@mixin setMiniShape($urlShape){
+    content: '';
+    position: absolute;
+    height: 15rem;
+    width: 15rem;
+    background: url('../img/miniBlob1.svg');
+}
+
 #joke > div{
     height: 90vh;
+}
+
+#joke {
+    position: relative;
+}
+
+span::after {
+    content:' | ';
+}
+
+#joke::before {
+    @include setMiniShape('../img/miniBlob1.svg');
+    left: 70%;
+}
+
+#joke::after {
+    @include setMiniShape('../img/miniBlob2.svg');
+    left: 10%;
+    bottom: 10%;
+}
+
+.shape1 {
+    @include setShape('../img/blob1.svg');
+}
+
+.shape2 {
+    @include setShape('../img/blob2.svg');
+}
+
+.shape3 {
+    @include setShape('../img/blob3.svg');
 }
 
 #score i{
@@ -17,18 +56,6 @@ $font-family-base: 'Rubik';
     &:hover{
         color: hsl(0,  0%,  0%) 
     }
-}
-
-.shape1 {
-    @include getShape('../img/blob1.svg');
-}
-
-.shape2 {
-    @include getShape('../img/blob2.svg');
-}
-
-.shape3 {
-    @include getShape('../img/blob3.svg');
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
