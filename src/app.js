@@ -41,13 +41,13 @@ var jokeFetched;
 var reportJokes = [];
 var lat;
 var long;
+var templateJoke = document.querySelector('p');
 var weatherHtml = document.querySelector('span');
 var weatherIcon = document.querySelector('img');
-var buttons = document.querySelectorAll('button');
 var scorePanel = document.querySelector('#score');
-var btnScore = document.querySelectorAll('#score button');
-var templateJoke = document.querySelector('p');
 var shapeBackground = document.querySelector('#joke > div');
+var buttons = document.querySelectorAll('button');
+var btnScore = document.querySelectorAll('#score button');
 navigator.geolocation.getCurrentPosition(function (position) {
     lat = position.coords.latitude;
     long = position.coords.longitude;
@@ -139,7 +139,7 @@ buttons.forEach(function (button) {
     });
 });
 btnScore.forEach(function (button) {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (evt) {
         reportJokes.push({
             jokeText: jokeFetched.joke || jokeFetched.value,
             id: jokeFetched.id,

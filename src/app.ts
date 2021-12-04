@@ -6,13 +6,13 @@ let jokeFetched: Promise<Object> | any;
 let reportJokes: any[] = [];
 let lat: number;
 let long: number;
-let weatherHtml: HTMLElement | any = document.querySelector('span')
-let weatherIcon: HTMLElement | any = document.querySelector('img');
+let templateJoke: HTMLParagraphElement = document.querySelector('p')!;
+let weatherHtml: HTMLSpanElement = document.querySelector('span')!;
+let weatherIcon: HTMLImageElement = document.querySelector('img')!;
+let scorePanel: HTMLDivElement = document.querySelector('#score')!; 
+let shapeBackground: HTMLDivElement= document.querySelector('#joke > div')!;
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
-let scorePanel : HTMLElement | any = document.querySelector('#score');
-let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button')
-let templateJoke: HTMLElement | any = document.querySelector('p');
-let shapeBackground : HTMLElement | any = document.querySelector('#joke > div');
+let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button');
 
 navigator.geolocation.getCurrentPosition((position)=> {
     lat = position.coords.latitude;
@@ -71,15 +71,15 @@ buttons.forEach((button) => {
     button.addEventListener ('click', () => {
         if ((Math.floor(Math.random()*2+1)>1)){
             fetchIcanhaz()
-                .then(res => insertHTML(res.joke))
-                .catch(error => insertHTML(error));
+            .then(res => insertHTML(res.joke))
+            .catch(error => insertHTML(error));
             replaceShape();
             showScoreButtons()
                 
         }else{
             fetchCuck()
-                .then(res => insertHTML(res.value))
-                .catch(error => insertHTML(error));
+            .then(res => insertHTML(res.value))
+            .catch(error => insertHTML(error));
             replaceShape();
             showScoreButtons();
         }
@@ -87,7 +87,7 @@ buttons.forEach((button) => {
 });
 
 btnScore.forEach( button => {
-    button.addEventListener ('click', () => {
+    button.addEventListener ('click', (evt: Event) => {
         reportJokes.push({
             jokeText: jokeFetched.joke || jokeFetched.value,
             id: jokeFetched.id,
