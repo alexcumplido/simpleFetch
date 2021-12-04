@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+span::after {
+  content: ' | ';
+}
+
 #joke > div {
   height: 90vh;
 }
@@ -7,27 +11,13 @@
   position: relative;
 }
 
-span::after {
-  content: ' | ';
+#score i {
+  color: #ffc105;
+  font-size: 2.5rem;
 }
 
-#joke::before {
-  content: '';
-  position: absolute;
-  height: 15rem;
-  width: 15rem;
-  background: url("../img/miniBlob1.svg");
-  left: 70%;
-}
-
-#joke::after {
-  content: '';
-  position: absolute;
-  height: 15rem;
-  width: 15rem;
-  background: url("../img/miniBlob1.svg");
-  left: 10%;
-  bottom: 10%;
+#score i:hover {
+  color: black;
 }
 
 .shape1 {
@@ -51,13 +41,23 @@ span::after {
   background-repeat: no-repeat;
 }
 
-#score i {
-  color: #ffc105;
-  font-size: 2.5rem;
+#joke::before {
+  content: '';
+  position: absolute;
+  height: 15rem;
+  width: 15rem;
+  background: url("../img/miniBlob1.svg");
+  left: 70%;
 }
 
-#score i:hover {
-  color: black;
+#joke::after {
+  content: '';
+  position: absolute;
+  height: 15rem;
+  width: 15rem;
+  background: url("../img/miniBlob1.svg");
+  left: 10%;
+  bottom: 10%;
 }
 
 /*!
