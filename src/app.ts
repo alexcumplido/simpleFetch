@@ -1,29 +1,26 @@
-const API_WEATHER_K: string = '3a6de1bfb15f6d47dc749e2fc2555d25';
 const API_DAD: string = 'https://icanhazdadjoke.com/';
 const API_CHUCK: string = 'https://api.chucknorris.io/jokes/random';
-
 let jokeFetched: Promise<Object> | any;
-let reportJokes: any[] = [];
-let lat: number;
-let long: number;
+
+type joke = {
+    id: number,
+    jokeText: string,
+    score: number,
+    date: string,
+}
+
+let reportJokes: joke [] = [];
 let templateJoke: HTMLParagraphElement = document.querySelector('p')!;
 let weatherHtml: HTMLSpanElement = document.querySelector('span')!;
 let weatherIcon: HTMLImageElement = document.querySelector('img')!;
-let scorePanel: HTMLDivElement = document.querySelector('#score')!; 
 let shapeBackground: HTMLDivElement= document.querySelector('#joke > div')!;
+let scorePanel = document.querySelector('#score') as HTMLDivElement; 
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button');
 
-navigator.geolocation.getCurrentPosition((position)=> {
-    lat = position.coords.latitude;
-    long = position.coords.longitude;
-    fetchWeather(lat, long)
-        .then(response => displayWeather(response))
-});
-
 async function fetchWeather (lat: number, long: number) {
     const res = await fetch
-    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${API_WEATHER_K}`);
+    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${'3a6de1bfb15f6d47dc749e2fc2555d25'}`);
     return await res.json();
 }
 
@@ -50,6 +47,13 @@ function showScoreButtons(): void {
     scorePanel.style.display = 'block';
 }
 
+navigator.geolocation.getCurrentPosition((position)=> {
+    let lat: number = position.coords.latitude;
+    let long: number = position.coords.longitude;
+    fetchWeather(lat, long)
+        .then(response => displayWeather(response));
+});
+
 function replaceShape(): void {
     switch (Math.floor(Math.random()*3+1)){
         case 1:
@@ -64,11 +68,11 @@ function replaceShape(): void {
             shapeBackground.classList.remove("shape1","shape2");
             shapeBackground.classList.add('shape3');
             break;
-    }
+    }   
 }
 
 buttons.forEach((button) => {
-    button.addEventListener ('click', () => {
+    button.addEventListener ('click', (evt: Event) => {
         if ((Math.floor(Math.random()*2+1)>1)){
             fetchIcanhaz()
             .then(res => insertHTML(res.joke))
@@ -89,8 +93,8 @@ buttons.forEach((button) => {
 btnScore.forEach( button => {
     button.addEventListener ('click', (evt: Event) => {
         reportJokes.push({
-            jokeText: jokeFetched.joke || jokeFetched.value,
             id: jokeFetched.id,
+            jokeText: jokeFetched.joke || jokeFetched.value,
             score: parseInt(button.id), 
             date: new Date().toISOString(),
         });

@@ -34,32 +34,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var API_WEATHER_K = '3a6de1bfb15f6d47dc749e2fc2555d25';
 var API_DAD = 'https://icanhazdadjoke.com/';
 var API_CHUCK = 'https://api.chucknorris.io/jokes/random';
 var jokeFetched;
 var reportJokes = [];
-var lat;
-var long;
 var templateJoke = document.querySelector('p');
 var weatherHtml = document.querySelector('span');
 var weatherIcon = document.querySelector('img');
-var scorePanel = document.querySelector('#score');
 var shapeBackground = document.querySelector('#joke > div');
+var scorePanel = document.querySelector('#score');
 var buttons = document.querySelectorAll('button');
 var btnScore = document.querySelectorAll('#score button');
-navigator.geolocation.getCurrentPosition(function (position) {
-    lat = position.coords.latitude;
-    long = position.coords.longitude;
-    fetchWeather(lat, long)
-        .then(function (response) { return displayWeather(response); });
-});
 function fetchWeather(lat, long) {
     return __awaiter(this, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("http://api.openweathermap.org/data/2.5/weather?lat=".concat(lat, "&lon=").concat(long, "&units=metric&appid=").concat(API_WEATHER_K))];
+                case 0: return [4 /*yield*/, fetch("http://api.openweathermap.org/data/2.5/weather?lat=".concat(lat, "&lon=").concat(long, "&units=metric&appid=").concat('3a6de1bfb15f6d47dc749e2fc2555d25'))];
                 case 1:
                     res = _a.sent();
                     return [4 /*yield*/, res.json()];
@@ -106,6 +97,12 @@ function insertHTML(content) {
 function showScoreButtons() {
     scorePanel.style.display = 'block';
 }
+navigator.geolocation.getCurrentPosition(function (position) {
+    var lat = position.coords.latitude;
+    var long = position.coords.longitude;
+    fetchWeather(lat, long)
+        .then(function (response) { return displayWeather(response); });
+});
 function replaceShape() {
     switch (Math.floor(Math.random() * 3 + 1)) {
         case 1:
@@ -123,7 +120,7 @@ function replaceShape() {
     }
 }
 buttons.forEach(function (button) {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (evt) {
         if ((Math.floor(Math.random() * 2 + 1) > 1)) {
             fetchIcanhaz()
                 .then(function (res) { return insertHTML(res.joke); })["catch"](function (error) { return insertHTML(error); });
@@ -141,8 +138,8 @@ buttons.forEach(function (button) {
 btnScore.forEach(function (button) {
     button.addEventListener('click', function (evt) {
         reportJokes.push({
-            jokeText: jokeFetched.joke || jokeFetched.value,
             id: jokeFetched.id,
+            jokeText: jokeFetched.joke || jokeFetched.value,
             score: parseInt(button.id),
             date: new Date().toISOString()
         });

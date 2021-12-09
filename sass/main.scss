@@ -44,23 +44,28 @@ span::after {
 
 .shape1 {
     @include setShape('../img/blob1.svg');
+    animation: toLeft 2s ease-in;
 }
 
 .shape2 {
     @include setShape('../img/blob2.svg');
+    animation: toLeft 2s ease-in;
 }
 
 .shape3 {
     @include setShape('../img/blob3.svg');
+    animation: toLeft 2s ease-in;
 }
 
 #joke::before {
     @include setMiniShape('../img/miniBlob1.svg');
+    animation: toLeft 2s ease-in;
     left: 70%;
 }
 
 #joke::after {
     @include setMiniShape('../img/miniBlob2.svg');
+    animation: toLeft 2s ease-in;
     left: 10%;
     bottom: 10%;
 }
