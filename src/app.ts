@@ -20,7 +20,7 @@ let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button');
 
 async function fetchWeather (lat: number, long: number) {
     const res = await fetch
-    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${'3a6de1bfb15f6d47dc749e2fc2555d25'}`);
+    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=3a6de1bfb15f6d47dc749e2fc2555d25`);
     return await res.json();
 }
 
