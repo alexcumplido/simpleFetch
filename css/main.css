@@ -33,8 +33,6 @@ span::after {
   background-size: 105% 105%;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-animation: toLeft 2s ease-in;
-          animation: toLeft 2s ease-in;
 }
 
 .shape2 {
@@ -42,8 +40,6 @@ span::after {
   background-size: 105% 105%;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-animation: toLeft 2s ease-in;
-          animation: toLeft 2s ease-in;
 }
 
 .shape3 {
@@ -51,8 +47,6 @@ span::after {
   background-size: 105% 105%;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-animation: toLeft 2s ease-in;
-          animation: toLeft 2s ease-in;
 }
 
 #joke::before {
@@ -61,8 +55,6 @@ span::after {
   height: 15rem;
   width: 15rem;
   background: url("../img/miniBlob1.svg");
-  -webkit-animation: toLeft 2s ease-in;
-          animation: toLeft 2s ease-in;
   left: 70%;
 }
 
@@ -72,8 +64,6 @@ span::after {
   height: 15rem;
   width: 15rem;
   background: url("../img/miniBlob1.svg");
-  -webkit-animation: toLeft 2s ease-in;
-          animation: toLeft 2s ease-in;
   left: 10%;
   bottom: 10%;
 }
