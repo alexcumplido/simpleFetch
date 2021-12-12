@@ -50,7 +50,7 @@ function fetchWeather(lat, long) {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("http://api.openweathermap.org/data/2.5/weather?lat=".concat(lat, "&lon=").concat(long, "&units=metric&appid=92ae27ccdcc5098641c6e98d92d86b4d"))];
+                case 0: return [4 /*yield*/, fetch("http://api.openweathermap.org/data/2.5/weather?lat=".concat(lat, "&lon=").concat(long, "&units=metric&appid=").concat('92ae27ccdcc5098641c6e98d92d86b4d'))];
                 case 1:
                     res = _a.sent();
                     return [4 /*yield*/, res.json()];
