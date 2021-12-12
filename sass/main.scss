@@ -63,7 +63,7 @@ span::after {
     @include setMiniShape('../img/miniBlob1.svg');
     left: 70%;
     animation: toLeft 1s ease-in;
-    animation: spin 0.5s ease-in;
+    animation: spin 0.45s ease-in;
     
 }
 
@@ -72,7 +72,7 @@ span::after {
     left: 10%;
     bottom: 10%;
     animation: toRight 1s ease-in;
-    animation: spin 0.5s ease-out;
+    animation: spin 0.45s ease-out;
 }
 
 
