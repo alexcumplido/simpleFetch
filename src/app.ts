@@ -1,3 +1,5 @@
+// te falla lo de weather porque tee falta un eventListener que haga la llamada que hace el fetchWeather!
+
 const API_DAD: string = 'https://icanhazdadjoke.com/';
 const API_CHUCK: string = 'https://api.chucknorris.io/jokes/random';
 let jokeFetched: Promise<Object> | any;
@@ -17,6 +19,7 @@ let shapeBackground: HTMLDivElement= document.querySelector('#joke > div')!;
 let scorePanel = document.querySelector('#score') as HTMLDivElement; 
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button');
+
 
 async function fetchWeather (lat: number, long: number) {
     const res = await fetch
@@ -47,12 +50,15 @@ function showScoreButtons(): void {
     scorePanel.style.display = 'block';
 }
 
-navigator.geolocation.getCurrentPosition((position)=> {
-    let lat: number = position.coords.latitude;
-    let long: number = position.coords.longitude;
-    fetchWeather(lat, long)
+
+window.addEventListener('load',()=>{
+    navigator.geolocation.getCurrentPosition((position)=> {
+        let lat: number = position.coords.latitude;     
+        let long: number = position.coords.longitude;
+        fetchWeather(lat, long)
         .then(response => displayWeather(response));
-});
+    });
+})
 
 function replaceShape(): void {
     switch (Math.floor(Math.random()*3+1)){
