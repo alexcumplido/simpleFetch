@@ -1,5 +1,3 @@
-// te falla lo de weather porque tee falta un eventListener que haga la llamada que hace el fetchWeather!
-
 const API_DAD: string = 'https://icanhazdadjoke.com/';
 const API_CHUCK: string = 'https://api.chucknorris.io/jokes/random';
 let jokeFetched: Promise<Object> | any;
