@@ -20,7 +20,6 @@ let scorePanel = document.querySelector('#score') as HTMLDivElement;
 let buttons: NodeListOf<Element> = document.querySelectorAll('button');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button');
 
-
 async function fetchIcanhaz() {
     const res = await fetch(`${API_DAD}`, {headers:{Accept:'application/json'}});
     return jokeFetched = await res.json();
@@ -39,11 +38,13 @@ function showScoreButtons(): void {
     scorePanel.style.display = 'block';
 }
 
-navigator.geolocation.getCurrentPosition((position)=> {
-    let lat: number = position.coords.latitude;     
-    let long: number = position.coords.longitude;
-    fetchWeather(lat, long)
-        .then(response => displayWeather(response));
+window.addEventListener('load',()=>{
+    navigator.geolocation.getCurrentPosition((position)=> {
+        let lat: number = position.coords.latitude;     
+        let long: number = position.coords.longitude;
+        fetchWeather(lat, long)
+            .then(response => displayWeather(response));
+    });
 });
 
 async function fetchWeather (lat: number, long: number) {
@@ -78,15 +79,15 @@ buttons.forEach((button) => {
     button.addEventListener ('click', (evt: Event) => {
         if ((Math.floor(Math.random()*2+1)>1)){
             fetchIcanhaz()
-            .then(res => insertHTML(res.joke))
-            .catch(error => insertHTML(error));
+                .then(res => insertHTML(res.joke))
+                .catch(error => insertHTML(error));
             replaceShape();
             showScoreButtons()
                 
         }else{
             fetchCuck()
-            .then(res => insertHTML(res.value))
-            .catch(error => insertHTML(error));
+                .then(res => insertHTML(res.value))
+                .catch(error => insertHTML(error));
             replaceShape();
             showScoreButtons();
         }

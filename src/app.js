@@ -80,11 +80,13 @@ function insertHTML(content) {
 function showScoreButtons() {
     scorePanel.style.display = 'block';
 }
-navigator.geolocation.getCurrentPosition(function (position) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    fetchWeather(lat, long)
-        .then(function (response) { return displayWeather(response); });
+window.addEventListener('load', function () {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        fetchWeather(lat, long)
+            .then(function (response) { return displayWeather(response); });
+    });
 });
 function fetchWeather(lat, long) {
     return __awaiter(this, void 0, void 0, function () {
