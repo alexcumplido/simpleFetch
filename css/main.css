@@ -66,8 +66,8 @@ span::after {
   left: 70%;
   -webkit-animation: toLeft 1s ease-in;
           animation: toLeft 1s ease-in;
-  -webkit-animation: spin 0.5s ease-in;
-          animation: spin 0.5s ease-in;
+  -webkit-animation: spin 0.45s ease-in;
+          animation: spin 0.45s ease-in;
 }
 
 #joke::after {
@@ -80,8 +80,8 @@ span::after {
   bottom: 10%;
   -webkit-animation: toRight 1s ease-in;
           animation: toRight 1s ease-in;
-  -webkit-animation: spin 0.5s ease-out;
-          animation: spin 0.5s ease-out;
+  -webkit-animation: spin 0.45s ease-out;
+          animation: spin 0.45s ease-out;
 }
 
 @-webkit-keyframes toLeft {
