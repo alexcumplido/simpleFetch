@@ -80,6 +80,30 @@ function insertHTML(content) {
 function showScoreButtons() {
     scorePanel.style.display = 'block';
 }
+navigator.geolocation.getCurrentPosition(function (position) {
+    var lat = position.coords.latitude;
+    var long = position.coords.longitude;
+    fetchWeather(lat, long)
+        .then(function (response) { return displayWeather(response); });
+});
+function fetchWeather(lat, long) {
+    return __awaiter(this, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, fetch("http://api.openweathermap.org/data/2.5/weather?lat=".concat(lat, "&lon=").concat(long, "&units=metric&appid=").concat('92ae27ccdcc5098641c6e98d92d86b4d'))];
+                case 1:
+                    res = _a.sent();
+                    return [4 /*yield*/, res.json()];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+function displayWeather(response) {
+    weatherIcon.setAttribute('src', "http://openweathermap.org/img/w/".concat(response.weather[0].icon, ".png"));
+    weatherHtml.textContent = "".concat(response.main.temp, " \u00B0C");
+}
 function replaceShape() {
     switch (Math.floor(Math.random() * 3 + 1)) {
         case 1:
@@ -122,26 +146,3 @@ btnScore.forEach(function (button) {
         });
     });
 });
-navigator.geolocation.getCurrentPosition(function (position) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    fetchWeather(lat, long)
-        .then(function (response) {
-        weatherIcon.setAttribute('src', "http://openweathermap.org/img/w/".concat(response.weather[0].icon, ".png"));
-        weatherHtml.textContent = "".concat(response.main.temp, " \u00B0C");
-    });
-});
-function fetchWeather(lat, long) {
-    return __awaiter(this, void 0, void 0, function () {
-        var res;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("http://api.openweathermap.org/data/2.5/weather?lat=".concat(lat, "&lon=").concat(long, "&units=metric&appid=").concat('92ae27ccdcc5098641c6e98d92d86b4d'))];
-                case 1:
-                    res = _a.sent();
-                    return [4 /*yield*/, res.json()];
-                case 2: return [2 /*return*/, _a.sent()];
-            }
-        });
-    });
-}
