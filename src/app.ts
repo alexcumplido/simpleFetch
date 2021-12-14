@@ -21,16 +21,7 @@ let buttons: NodeListOf<Element> = document.querySelectorAll('button');
 let btnScore: NodeListOf<Element> = document.querySelectorAll('#score button');
 
 
-async function fetchWeather (lat: number, long: number) {
-    const res = await fetch
-    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${'92ae27ccdcc5098641c6e98d92d86b4d'}`);
-    return await res.json();
-}
 
-function displayWeather (response: any): void {
-    weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
-    weatherHtml.textContent = `${response.main.temp} °C`;
-}
 
 async function fetchIcanhaz() {
     const res = await fetch(`${API_DAD}`, {headers:{Accept:'application/json'}});
@@ -51,14 +42,7 @@ function showScoreButtons(): void {
 }
 
 
-window.addEventListener('load',()=>{
-    navigator.geolocation.getCurrentPosition((position)=> {
-        let lat: number = position.coords.latitude;     
-        let long: number = position.coords.longitude;
-        fetchWeather(lat, long)
-        .then(response => displayWeather(response));
-    });
-})
+
 
 function replaceShape(): void {
     switch (Math.floor(Math.random()*3+1)){
@@ -106,3 +90,19 @@ btnScore.forEach( button => {
         });
     })
 });
+
+navigator.geolocation.getCurrentPosition((position)  => {
+        let lat: number = position.coords.latitude;     
+        let long: number = position.coords.longitude;
+        fetchWeather(lat, long)
+            .then(response => {
+                weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
+                weatherHtml.textContent = `${response.main.temp} °C`
+        });
+});
+
+async function fetchWeather (lat: number, long: number) {
+    const res = await fetch
+    (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${'92ae27ccdcc5098641c6e98d92d86b4d'}`);
+    return await res.json();
+}
