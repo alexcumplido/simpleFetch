@@ -28,7 +28,7 @@ async function fetchCuck() {
     return jokeFetched = await res.json();
 }
 
-function insertHTML (content: string): void {
+function insertHTML(content: string): void {
     templateJoke.textContent = content;
 }
 
@@ -36,7 +36,7 @@ function showScoreButtons(): void {
     scorePanel.style.display = 'block';
 }
 
-window.addEventListener('load',()=>{
+window.addEventListener('load',() => {
     navigator.geolocation.getCurrentPosition((position)=> {
         let lat: number = position.coords.latitude;     
         let long: number = position.coords.longitude;
@@ -45,19 +45,19 @@ window.addEventListener('load',()=>{
     });
 });
 
-async function fetchWeather (lat: number, long: number) {
+async function fetchWeather(lat: number, long: number) {
     const res = await fetch
     (`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${'92ae27ccdcc5098641c6e98d92d86b4d'}`);
     return await res.json();
 }
 
-function displayWeather (response: any): void {
+function displayWeather(response: any): void {
     weatherIcon.setAttribute('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`);
     weatherHtml.textContent = `${response.main.temp} °C`;
 }
 
 function replaceShape(): void {
-    switch (Math.floor(Math.random()*3+1)){
+    switch (Math.floor(Math.random()*3+1)) {
         case 1:
             shapeBackground.classList.remove("shape2","shape3");
             shapeBackground.classList.add('shape1');
@@ -75,14 +75,14 @@ function replaceShape(): void {
 
 buttons.forEach((button) => {
     button.addEventListener ('click', (evt: Event) => {
-        if ((Math.floor(Math.random()*2+1)>1)){
+        if ((Math.floor(Math.random()*2+1)>1)) {
             fetchIcanhaz()
                 .then(res => insertHTML(res.joke))
                 .catch(error => insertHTML(error));
             replaceShape();
             showScoreButtons()
                 
-        }else{
+        } else {
             fetchCuck()
                 .then(res => insertHTML(res.value))
                 .catch(error => insertHTML(error));
